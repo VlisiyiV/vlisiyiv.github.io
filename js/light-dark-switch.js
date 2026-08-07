@@ -2,9 +2,11 @@
 function syncGiscusTheme() {
     let root = document.documentElement;
     let theme = root.getAttribute('theme') || 'dark';
+    // 必须用完整 URL: giscus 在自身 iframe 内加载主题, 相对路径会解析到 giscus.app 域导致 404
+    let base = location.origin;
     let giscusTheme = theme === 'dark'
-        ? '/giscus/giscus-dark.css'
-        : '/giscus/giscus-light.css';
+        ? base + '/giscus/giscus-dark.css'
+        : base + '/giscus/giscus-light.css';
     let frame = document.querySelector('iframe.giscus-frame');
     if (frame && frame.contentWindow) {
         frame.contentWindow.postMessage(
