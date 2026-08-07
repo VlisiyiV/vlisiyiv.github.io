@@ -479,9 +479,9 @@ navbar,
 .archive-main-card,
 .widget,
 .info-card {
-  background: color-mix(in srgb, var(--card-background) 60%, transparent);
-  backdrop-filter: blur(50px) saturate(1.1);
-  -webkit-backdrop-filter: blur(50px) saturate(1.1);
+  background: color-mix(in srgb, var(--card-background) 80%, transparent);
+  backdrop-filter: blur(60px) saturate(1.4);
+  -webkit-backdrop-filter: blur(60px) saturate(1.4);
 }
 .article-tag-list-link,
 .widget-tag-list-link,
@@ -2356,9 +2356,9 @@ a.article-title:active {
   }
 }
 #footer {
-  background: color-mix(in srgb, var(--card-background) 60%, transparent);
-  backdrop-filter: blur(50px) saturate(1.1);
-  -webkit-backdrop-filter: blur(50px) saturate(1.1);
+  background: color-mix(in srgb, var(--card-background) 80%, transparent);
+  backdrop-filter: blur(60px) saturate(1.4);
+  -webkit-backdrop-filter: blur(60px) saturate(1.4);
   font-size: 16px;
   font-weight: medium;
   display: -webkit-box;
