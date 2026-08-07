@@ -6,9 +6,9 @@
   --neut-L10: rgba(255,255,255,0.1);
   --banner-dim: rgba(0,0,0,0.2);
   --primary-hue: 250;
-  --glass-bg: rgba(26,34,43,0.95);
-  --glass-shine: rgba(255,255,255,0.04);
-  --glass-border: rgba(255,255,255,0.1);
+  --glass-bg: rgba(26,34,43,0.62);
+  --glass-shine: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.12);
   --main-title: rgba(255,255,255,0.9);
   --btn-content: var(--neut-L75);
   --btn-content-hover: var(--btn-content);
@@ -111,9 +111,9 @@
 }
 :root[theme='light'] {
   --card-background: #fff;
-  --glass-bg: rgba(255,255,255,0.95);
-  --glass-shine: rgba(255,255,255,0.4);
-  --glass-border: rgba(255,255,255,0.6);
+  --glass-bg: rgba(255,255,255,0.62);
+  --glass-shine: rgba(255,255,255,0.45);
+  --glass-border: rgba(255,255,255,0.65);
   --banner-dim: none;
   --neut-L90: rgba(0,0,0,0.9);
   --neut-L75: rgba(0,0,0,0.75);
