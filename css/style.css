@@ -722,6 +722,12 @@ navbar,
     top: 0;
   }
 }
+html[theme="dark"] #banner-img-light {
+  display: none;
+}
+html[theme="dark"] #banner-img-dark {
+  display: block;
+}
 #banner {
   height: 40vh;
   width: 100%;
@@ -744,6 +750,9 @@ navbar,
   width: 100%;
   object-fit: cover;
   object-position: center;
+}
+#banner #banner-img-dark {
+  display: none;
 }
 #banner #banner-dim {
   height: 100%;
