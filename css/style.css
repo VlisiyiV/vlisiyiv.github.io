@@ -479,7 +479,7 @@ navbar,
 .archive-main-card,
 .widget,
 .info-card {
-  background: color-mix(in srgb, var(--card-background) 90%, transparent);
+  background: color-mix(in srgb, var(--card-background) 60%, transparent);
   backdrop-filter: blur(50px) saturate(1.1);
   -webkit-backdrop-filter: blur(50px) saturate(1.1);
 }
@@ -2356,7 +2356,7 @@ a.article-title:active {
   }
 }
 #footer {
-  background: color-mix(in srgb, var(--card-background) 90%, transparent);
+  background: color-mix(in srgb, var(--card-background) 60%, transparent);
   backdrop-filter: blur(50px) saturate(1.1);
   -webkit-backdrop-filter: blur(50px) saturate(1.1);
   font-size: 16px;
