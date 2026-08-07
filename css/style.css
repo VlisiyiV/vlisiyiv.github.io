@@ -17,7 +17,7 @@
   --title-hover: var(--primary);
   --light-dot: var(--primary);
   --article-meta: rgba(255,255,255,0.5);
-  --article-text: rgba(255,255,255,0.75);
+  --article-text: rgba(245,238,218,0.85);
   --info-name: rgba(255,255,255,0.9);
   --info-sub: rgba(255,255,255,0.5);
   --link: var(--primary);
@@ -116,7 +116,7 @@
   --neut-L10: rgba(0,0,0,0.1);
   --main-title: rgba(0,0,0,0.9);
   --article-meta: rgba(0,0,0,0.5);
-  --article-text: rgba(0,0,0,0.75);
+  --article-text: rgba(85,85,85,0.85);
   --btn-text-neutral-text: rgba(0,0,0,0.75);
   --info-name: rgba(0,0,0,0.9);
   --info-sub: rgba(0,0,0,0.5);
@@ -467,14 +467,23 @@ navbar,
 .widget,
 .info-card {
   background: var(--card-background);
-  background: color-mix(in srgb, var(--card-background) 50%, transparent);
-  backdrop-filter: blur(20px) saturate(1.1);
-  -webkit-backdrop-filter: blur(20px) saturate(1.1);
   border-radius: 16px;
   -webkit-transition: background 0.15s ease-out;
   -moz-transition: background 0.15s ease-out;
   -ms-transition: background 0.15s ease-out;
   transition: background 0.15s ease-out;
+}
+navbar,
+.comment-card,
+.wl-comment-card,
+#page-nav #num-bar,
+#page-nav .page-nav-btn,
+.archive-main-card,
+.widget,
+.info-card {
+  background: color-mix(in srgb, var(--card-background) 80%, transparent);
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
 }
 .article-tag-list-link,
 .widget-tag-list-link,
@@ -2343,7 +2352,9 @@ a.article-title:active {
   }
 }
 #footer {
-  background: var(--card-background);
+  background: color-mix(in srgb, var(--card-background) 80%, transparent);
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
   font-size: 16px;
   font-weight: medium;
   display: -webkit-box;
