@@ -2768,6 +2768,321 @@ input[type="range"] {
   -ms-transition: background 0.15s ease-out;
   transition: background 0.15s ease-out;
 }
+#daynight-btn {
+  font-size: 0.6px;
+  width: 180em;
+  height: 70em;
+  position: relative;
+  border-radius: 100em;
+  overflow: hidden;
+  background: #191e32;
+  -webkit-box-shadow: inset 0 0 5em 3em rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 5em 3em rgba(0,0,0,0.5);
+  cursor: pointer;
+  -webkit-transition: background 0.7s;
+  -moz-transition: background 0.7s;
+  -ms-transition: background 0.7s;
+  transition: background 0.7s;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+}
+#daynight-btn .dn-components {
+  position: absolute;
+  inset: 0;
+  width: 180em;
+  height: 70em;
+}
+#daynight-btn .dn-main-button {
+  position: absolute;
+  top: 7.5em;
+  left: 7.5em;
+  width: 55em;
+  height: 55em;
+  border-radius: 50%;
+  background: #c3c8d2;
+  -webkit-box-shadow: 3em 3em 5em rgba(0,0,0,0.5), inset -3em -5em 3em -3em rgba(0,0,0,0.5), inset 4em 5em 2em -2em #ffffd2;
+  box-shadow: 3em 3em 5em rgba(0,0,0,0.5), inset -3em -5em 3em -3em rgba(0,0,0,0.5), inset 4em 5em 2em -2em #ffffd2;
+  -webkit-transform: translateX(110em);
+  -moz-transform: translateX(110em);
+  -ms-transform: translateX(110em);
+  transform: translateX(110em);
+  -webkit-transition: -webkit-transform 1s, background 1s, box-shadow 1s;
+  -moz-transition: -moz-transform 1s, background 1s, box-shadow 1s;
+  -ms-transition: -ms-transform 1s, background 1s, box-shadow 1s;
+  transition: transform 1s, background 1s, box-shadow 1s;
+  -webkit-transition-timing-function: cubic-bezier(0.56, 1.35, 0.52, 1);
+  -moz-transition-timing-function: cubic-bezier(0.56, 1.35, 0.52, 1);
+  -ms-transition-timing-function: cubic-bezier(0.56, 1.35, 0.52, 1);
+  transition-timing-function: cubic-bezier(0.56, 1.35, 0.52, 1);
+}
+#daynight-btn .dn-moon {
+  position: absolute;
+  background: #96a0b4;
+  -webkit-box-shadow: inset 0 0 1em 1em rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 1em 1em rgba(0,0,0,0.3);
+  border-radius: 50%;
+  opacity: 1;
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  -ms-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+#daynight-btn .dn-moon:nth-child(1) {
+  top: 7.5em;
+  left: 25em;
+  width: 12.5em;
+  height: 12.5em;
+}
+#daynight-btn .dn-moon:nth-child(2) {
+  top: 20em;
+  left: 7.5em;
+  width: 20em;
+  height: 20em;
+}
+#daynight-btn .dn-moon:nth-child(3) {
+  top: 32.5em;
+  left: 32.5em;
+  width: 12.5em;
+  height: 12.5em;
+}
+#daynight-btn .dn-cloud {
+  position: absolute;
+  bottom: -15em;
+  left: 0;
+  width: 100%;
+  height: 0;
+  opacity: 0;
+  -webkit-transition: opacity 0.7s;
+  -moz-transition: opacity 0.7s;
+  -ms-transition: opacity 0.7s;
+  transition: opacity 0.7s;
+}
+#daynight-btn .dn-cloud-son {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+#daynight-btn .dn-cloud .dn-cloud-son:nth-child(1) {
+  right: -20em;
+  bottom: 10em;
+  width: 50em;
+  height: 50em;
+}
+#daynight-btn .dn-cloud .dn-cloud-son:nth-child(2) {
+  right: -10em;
+  bottom: -25em;
+  width: 60em;
+  height: 60em;
+}
+#daynight-btn .dn-cloud .dn-cloud-son:nth-child(3) {
+  right: 20em;
+  bottom: -40em;
+  width: 60em;
+  height: 60em;
+}
+#daynight-btn .dn-cloud .dn-cloud-son:nth-child(4) {
+  right: 50em;
+  bottom: -35em;
+  width: 60em;
+  height: 60em;
+}
+#daynight-btn .dn-cloud .dn-cloud-son:nth-child(5) {
+  right: 75em;
+  bottom: -60em;
+  width: 55em;
+  height: 55em;
+}
+#daynight-btn .dn-cloud .dn-cloud-son:nth-child(6) {
+  right: 110em;
+  bottom: -50em;
+  width: 50em;
+  height: 50em;
+}
+#daynight-btn .dn-stars {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  -webkit-transition: opacity 0.7s;
+  -moz-transition: opacity 0.7s;
+  -ms-transition: opacity 0.7s;
+  transition: opacity 0.7s;
+}
+#daynight-btn .dn-star {
+  position: absolute;
+  width: calc(2 * var(--size));
+  height: calc(2 * var(--size));
+  -webkit-animation-name: dn-star-twinkle;
+  -moz-animation-name: dn-star-twinkle;
+  -ms-animation-name: dn-star-twinkle;
+  animation-name: dn-star-twinkle;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -ms-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -moz-animation-direction: alternate;
+  -ms-animation-direction: alternate;
+  animation-direction: alternate;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -ms-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+#daynight-btn .dn-star.big {
+  --size: 7.5em;
+}
+#daynight-btn .dn-star.medium {
+  --size: 5em;
+}
+#daynight-btn .dn-star.small {
+  --size: 3em;
+}
+#daynight-btn .dn-star:nth-child(1) {
+  top: 11em;
+  left: 39em;
+  -webkit-animation-duration: 3.5s;
+  -moz-animation-duration: 3.5s;
+  -ms-animation-duration: 3.5s;
+  animation-duration: 3.5s;
+}
+#daynight-btn .dn-star:nth-child(2) {
+  top: 39em;
+  left: 91em;
+  -webkit-animation-duration: 4.1s;
+  -moz-animation-duration: 4.1s;
+  -ms-animation-duration: 4.1s;
+  animation-duration: 4.1s;
+}
+#daynight-btn .dn-star:nth-child(3) {
+  top: 26em;
+  left: 19em;
+  -webkit-animation-duration: 4.9s;
+  -moz-animation-duration: 4.9s;
+  -ms-animation-duration: 4.9s;
+  animation-duration: 4.9s;
+}
+#daynight-btn .dn-star:nth-child(4) {
+  top: 37em;
+  left: 66em;
+  -webkit-animation-duration: 5.3s;
+  -moz-animation-duration: 5.3s;
+  -ms-animation-duration: 5.3s;
+  animation-duration: 5.3s;
+}
+#daynight-btn .dn-star:nth-child(5) {
+  top: 21em;
+  left: 75em;
+  -webkit-animation-duration: 3s;
+  -moz-animation-duration: 3s;
+  -ms-animation-duration: 3s;
+  animation-duration: 3s;
+}
+#daynight-btn .dn-star:nth-child(6) {
+  top: 51em;
+  left: 38em;
+  -webkit-animation-duration: 2.2s;
+  -moz-animation-duration: 2.2s;
+  -ms-animation-duration: 2.2s;
+  animation-duration: 2.2s;
+}
+#daynight-btn .dn-star-son {
+  float: left;
+  width: var(--size);
+  height: var(--size);
+  background-image: -webkit-radial-gradient(circle var(--size) at var(--pos), transparent var(--size), #fff);
+  background-image: -moz-radial-gradient(circle var(--size) at var(--pos), transparent var(--size), #fff);
+  background-image: -ms-radial-gradient(circle var(--size) at var(--pos), transparent var(--size), #fff);
+  background-image: radial-gradient(circle var(--size) at var(--pos), transparent var(--size), #fff);
+}
+#daynight-btn .dn-star-son:nth-child(1) {
+  --pos: left 0;
+}
+#daynight-btn .dn-star-son:nth-child(2) {
+  --pos: right 0;
+}
+#daynight-btn .dn-star-son:nth-child(3) {
+  --pos: 0 bottom;
+}
+#daynight-btn .dn-star-son:nth-child(4) {
+  --pos: right bottom;
+}
+html[theme='light'] #daynight-btn {
+  background: #4685c0;
+}
+html[theme='light'] #daynight-btn .dn-main-button {
+  -webkit-transform: translateX(0);
+  -moz-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+  background: #ffc323;
+  -webkit-box-shadow: 3em 3em 5em rgba(0,0,0,0.5), inset -3em -5em 3em -3em rgba(0,0,0,0.5), inset 4em 5em 2em -2em #ffe650;
+  box-shadow: 3em 3em 5em rgba(0,0,0,0.5), inset -3em -5em 3em -3em rgba(0,0,0,0.5), inset 4em 5em 2em -2em #ffe650;
+}
+html[theme='light'] #daynight-btn .dn-moon {
+  opacity: 0;
+}
+html[theme='light'] #daynight-btn .dn-cloud {
+  opacity: 1;
+}
+html[theme='light'] #daynight-btn .dn-stars {
+  opacity: 0;
+}
+@-moz-keyframes dn-star-twinkle {
+  0%, 20% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+  }
+  20%, 100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes dn-star-twinkle {
+  0%, 20% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+  }
+  20%, 100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@-o-keyframes dn-star-twinkle {
+  0%, 20% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+  }
+  20%, 100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes dn-star-twinkle {
+  0%, 20% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+  }
+  20%, 100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
 #sidebar {
   width: 100% !important;
   height: 100%;

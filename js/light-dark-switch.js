@@ -17,8 +17,9 @@ function syncGiscusTheme() {
 }
 
 let themeFunc = async function() {
-    let btn = document.getElementById("theme-btn");
+    let btn = document.getElementById("daynight-btn");
     let root = document.documentElement;
+    if (!btn) return;
     btn.addEventListener('click', e => {
         if (root.getAttribute('theme') == 'dark') {
             root.setAttribute('theme', 'light');
