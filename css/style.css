@@ -6,8 +6,9 @@
   --neut-L10: rgba(255,255,255,0.1);
   --banner-dim: rgba(0,0,0,0.2);
   --primary-hue: 250;
-  --glass-bg: rgba(26,34,43,0.72);
-  --glass-border: rgba(255,255,255,0.14);
+  --glass-bg: rgba(26,34,43,0.92);
+  --glass-shine: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.12);
   --main-title: rgba(255,255,255,0.9);
   --btn-content: var(--neut-L75);
   --btn-content-hover: var(--btn-content);
@@ -110,8 +111,9 @@
 }
 :root[theme='light'] {
   --card-background: #fff;
-  --glass-bg: rgba(255,255,255,0.72);
-  --glass-border: rgba(255,255,255,0.65);
+  --glass-bg: rgba(255,255,255,0.92);
+  --glass-shine: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.7);
   --banner-dim: none;
   --neut-L90: rgba(0,0,0,0.9);
   --neut-L75: rgba(0,0,0,0.75);
@@ -483,12 +485,15 @@ navbar,
 .archive-main-card,
 .widget,
 .info-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(30px) saturate(1.4);
-  -webkit-backdrop-filter: blur(30px) saturate(1.4);
+  background: -webkit-linear-gradient(270deg, var(--glass-shine), transparent 30%), var(--glass-bg);
+  background: -moz-linear-gradient(270deg, var(--glass-shine), transparent 30%), var(--glass-bg);
+  background: -ms-linear-gradient(270deg, var(--glass-shine), transparent 30%), var(--glass-bg);
+  background: linear-gradient(180deg, var(--glass-shine), transparent 30%), var(--glass-bg);
+  backdrop-filter: blur(80px) saturate(1.6);
+  -webkit-backdrop-filter: blur(80px) saturate(1.6);
   border: 1px solid var(--glass-border);
-  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.12);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.12);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 4px 16px rgba(0,0,0,0.1);
 }
 .article-tag-list-link,
 .widget-tag-list-link,
@@ -2363,9 +2368,12 @@ a.article-title:active {
   }
 }
 #footer {
-  background: var(--glass-bg);
-  backdrop-filter: blur(30px) saturate(1.4);
-  -webkit-backdrop-filter: blur(30px) saturate(1.4);
+  background: -webkit-linear-gradient(270deg, var(--glass-shine), transparent 30%), var(--glass-bg);
+  background: -moz-linear-gradient(270deg, var(--glass-shine), transparent 30%), var(--glass-bg);
+  background: -ms-linear-gradient(270deg, var(--glass-shine), transparent 30%), var(--glass-bg);
+  background: linear-gradient(180deg, var(--glass-shine), transparent 30%), var(--glass-bg);
+  backdrop-filter: blur(80px) saturate(1.6);
+  -webkit-backdrop-filter: blur(80px) saturate(1.6);
   border-top: 1px solid var(--glass-border);
   font-size: 16px;
   font-weight: medium;
