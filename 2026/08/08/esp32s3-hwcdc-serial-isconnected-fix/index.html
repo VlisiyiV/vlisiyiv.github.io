@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="false" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>ESP32S3 硬件CDC串口 isConnected() / while(!Serial) 方法失效(上电即返回 true)的问题解决方案(PlatformIO / Arduino IDE) | VlisiyiV的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="现象今天在给ESP32S3烧录固件之后发现一个问题 原本的检测串口是否打开的代码失效了 1while(!Serial);  原本代码会阻塞直到电脑打开串口监视器, 而现在则是一旦连接到电脑就跳出 排查过程排查后发现在HWCDC.h中对于HWCDC将运算符重载为HWCDC::isCDC_Connected(), 同时HWCDC::isConnected() 也内联到HWCDC::isCDC_Conn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESP32S3 硬件CDC串口 isConnected() &#x2F; while(!Serial) 方法失效(上电即返回 true)的问题解决方案(PlatformIO &#x2F; Arduino IDE)">
+<meta property="og:url" content="https://blog.033280721.xyz/2026/08/08/esp32s3-hwcdc-serial-isconnected-fix/index.html">
+<meta property="og:site_name" content="VlisiyiV的博客">
+<meta property="og:description" content="现象今天在给ESP32S3烧录固件之后发现一个问题 原本的检测串口是否打开的代码失效了 1while(!Serial);  原本代码会阻塞直到电脑打开串口监视器, 而现在则是一旦连接到电脑就跳出 排查过程排查后发现在HWCDC.h中对于HWCDC将运算符重载为HWCDC::isCDC_Connected(), 同时HWCDC::isConnected() 也内联到HWCDC::isCDC_Conn">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-08T05:47:00.000Z">
+<meta property="article:modified_time" content="2026-08-08T05:48:07.058Z">
+<meta property="article:author" content="VlisiyiV">
+<meta property="article:tag" content="Arduino">
+<meta property="article:tag" content="ESP32S3">
+<meta property="article:tag" content="PlatformIO">
+<meta property="article:tag" content="USB CDC">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-192.png" sizes="192x192">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-192.png" sizes="192x192">
+  
+  
+  <link rel="stylesheet" href="/css/style.css?v=20260807c">
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body>
+  
+   
+  <div id="main-grid" class="  ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>VlisiyiV的博客 </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">首页</a>
+    
+      <a class="main-nav-link" href="/archives">归档</a>
+    
+      <a class="main-nav-link" href="/about">关于</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <div id="daynight-btn" class="nav-icon" title="toggle_theme">
+      <div class="dn-components">
+        <div class="dn-main-button">
+          <div class="dn-moon"></div>
+          <div class="dn-moon"></div>
+          <div class="dn-moon"></div>
+        </div>
+        <div class="dn-daytime-backgrond"></div>
+        <div class="dn-daytime-backgrond"></div>
+        <div class="dn-daytime-backgrond"></div>
+        <div class="dn-cloud">
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+        </div>
+        <div class="dn-cloud dn-cloud-light">
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+          <div class="dn-cloud-son"></div>
+        </div>
+        <div class="dn-stars">
+          <div class="dn-star big"><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div></div>
+          <div class="dn-star big"><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div></div>
+          <div class="dn-star medium"><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div></div>
+          <div class="dn-star medium"><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div></div>
+          <div class="dn-star small"><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div></div>
+          <div class="dn-star small"><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div><div class="dn-star-son"></div></div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">首页</a>
+    
+      <a class="nav-dropdown-link" href="/archives">归档</a>
+    
+      <a class="nav-dropdown-link" href="/about">关于</a>
+    
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">VlisiyiV </div>
+      <div class="dot"></div>
+      <div class="subtitle">一位嵌入式开发者的技术小站 </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/VlisiyiV" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://space.bilibili.com/592669612" title="Bilibili"><i class="fa-brands fa-bilibili"></i></a>
+        
+          <a class="link-btn" href="mailto:lisiyi@033280721.xyz" title="Email"><i class="fa-solid fa-envelope"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">分类</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">
+                嵌入式
+                <div class="category-count">1</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">标签</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Arduino/" rel="tag">Arduino</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/ESP32S3/" rel="tag">ESP32S3</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/PlatformIO/" rel="tag">PlatformIO</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/USB-CDC/" rel="tag">USB CDC</a></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="post-esp32s3-hwcdc-serial-isconnected-fix" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        ESP32S3 硬件CDC串口 isConnected() / while(!Serial) 方法失效(上电即返回 true)的问题解决方案(PlatformIO / Arduino IDE)
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2026-08-08T05:47:00.000Z" itemprop="datePublished">2026-08-08</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            2k 词 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Arduino/" rel="tag">Arduino</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ESP32S3/" rel="tag">ESP32S3</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PlatformIO/" rel="tag">PlatformIO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USB-CDC/" rel="tag">USB CDC</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>今天在给ESP32S3烧录固件之后发现一个问题</p>
+<p>原本的检测串口是否打开的代码失效了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(!Serial);</span><br></pre></td></tr></table></figure>
+
+<p>原本代码会阻塞直到电脑打开串口监视器, 而现在则是一旦连接到电脑就跳出</p>
+<h3 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h3><p>排查后发现在<code>HWCDC.h</code>中对于<code>HWCDC</code>将运算符重载为<code>HWCDC::isCDC_Connected()</code>, 同时<code>HWCDC::isConnected()</code> 也内联到<code>HWCDC::isCDC_Connected()</code></p>
+<p>而<code>HWCDC::isCDC_Connected()</code> 内部的逻辑是</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">HWCDC::isCDC_Connected</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> <span class="type">static</span> <span class="type">bool</span> running = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// USB 可能被拔出</span></span><br><span class="line"> <span class="keyword">if</span> (!<span class="built_in">isPlugged</span>()) &#123;</span><br><span class="line"> connected = <span class="literal">false</span>;</span><br><span class="line"> running = <span class="literal">false</span>;</span><br><span class="line"> <span class="comment">// ISR中的SOF导致固件上传问题</span></span><br><span class="line"> <span class="comment">//SOF_TIMEOUT = 5; // 拔掉时 SOF 超时</span></span><br><span class="line"> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//else &#123;</span></span><br><span class="line"> <span class="comment">// SOF_TIMEOUT = 50; // 插入时 SOF 超时</span></span><br><span class="line"> <span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (connected) &#123;<span class="comment">// &lt;--若 connected 为 true 则返回 true</span></span><br><span class="line"> running = <span class="literal">false</span>;</span><br><span class="line"> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">if</span> (running == <span class="literal">false</span> &amp;&amp; !connected) &#123; <span class="comment">// 只启用一次！</span></span><br><span class="line"> <span class="built_in">usb_serial_jtag_ll_ena_intr_mask</span>(USB_SERIAL_JTAG_INTR_SERIAL_IN_EMPTY);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 这将向 CDC TX FIFO 提供数据以触发 IN_EMPTY</span></span><br><span class="line"> <span class="built_in">usb_serial_jtag_ll_txfifo_flush</span>();</span><br><span class="line"> running = <span class="literal">true</span>;</span><br><span class="line"> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的<code>connected</code>变量因为误判在上电时为True (具体原因我也不清楚)</p>
+<p>我尝试了 pioarduino-espressif32 的很多版本的平台(55.03.311, 55.03.31-2, 54.03.21), 但是无一例外全部不行, 但是在Arduino IDE中编译的固件则没有此问题, 且以前我使用PIO编译出来的固件也没有任何问题, 所以说可能是个玄学bug(?)</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="在Serial-begin-之前加一个Serial-end"><a href="#在Serial-begin-之前加一个Serial-end" class="headerlink" title="在Serial.begin()之前加一个Serial.end()"></a>在<code>Serial.begin()</code>之前加一个<code>Serial.end()</code></h4><p><code>Serial.end()</code>的实现是</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HWCDC::end</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> <span class="comment">//Disable/clear/free tx/rx interrupt.</span></span><br><span class="line"> <span class="built_in">usb_serial_jtag_ll_disable_intr_mask</span>(USB_SERIAL_JTAG_LL_INTR_MASK);</span><br><span class="line"> <span class="built_in">usb_serial_jtag_ll_clr_intsts_mask</span>(USB_SERIAL_JTAG_LL_INTR_MASK);</span><br><span class="line"> <span class="built_in">esp_intr_free</span>(intr_handle);</span><br><span class="line"> intr_handle = <span class="literal">NULL</span>;</span><br><span class="line"> <span class="keyword">if</span> (tx_lock != <span class="literal">NULL</span>) &#123;</span><br><span class="line"> <span class="built_in">vSemaphoreDelete</span>(tx_lock);</span><br><span class="line"> tx_lock = <span class="literal">NULL</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in">setRxBufferSize</span>(<span class="number">0</span>);</span><br><span class="line"> <span class="built_in">setTxBufferSize</span>(<span class="number">0</span>);</span><br><span class="line"> <span class="keyword">if</span> (arduino_hw_cdc_event_loop_handle) &#123;</span><br><span class="line"> <span class="built_in">esp_event_loop_delete</span>(arduino_hw_cdc_event_loop_handle);</span><br><span class="line"> arduino_hw_cdc_event_loop_handle = <span class="literal">NULL</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> HWCDC::<span class="built_in">deinit</span>(<span class="keyword">this</span>);</span><br><span class="line"> <span class="built_in">setDebugOutput</span>(<span class="literal">false</span>);</span><br><span class="line"> connected = <span class="literal">false</span>; <span class="comment">// &lt;--此处将 connected 置为 false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>会把<code>connected</code>置为 <code>false</code></p>
+<p>最终初始化代码为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Serial.<span class="built_in">end</span>();<span class="comment">// 重置connected</span></span><br><span class="line">Serial.<span class="built_in">begin</span>(<span class="number">115200</span>);<span class="comment">// 初始化串口通信</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 等待用户打开串口</span></span><br><span class="line"><span class="keyword">while</span>(!Serial);</span><br><span class="line"><span class="comment">// while (Serial.isConnected()); // 与上一行等价</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// TO DO</span></span><br></pre></td></tr></table></figure>
+
+<p>这样就不会再上电就返回 true 啦</p>
+<p>如果还不行的话可以试试 <del>给图灵和冯诺依曼老祖点根香</del> 检查ARDUINO_USB_MODE 宏是否定义且等于1 (Arduino IDE 是 “工具” -&gt; “USB CDC On Boot: “ -&gt; “Enable”)</p>
+<h3 id="相似案例"><a href="#相似案例" class="headerlink" title="相似案例"></a>相似案例</h3><p><a target="_blank" rel="noopener" href="https://github.com/espressif/arduino-esp32/pull/12184">fix(usb_hw_serial): fixes connected state after sketch is uploaded by SuGlider · Pull Request #12184 · espressif&#x2F;arduino-esp32</a></p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2026/08/07/welcome/"
+      title="欢迎光临"
+     >
+
+    <p class="title-text">
+      
+        欢迎光临
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+
+
+
+  <div id="comment-card" class="comment-card">
+    <div class="main-title-bar">
+      <div class="main-title-dot"></div>
+      <div class="main-title">留言 </div>
+    </div>
+    <script src="https://giscus.app/client.js"
+      data-repo="VlisiyiV/vlisiyiv.github.io"
+      data-repo-id="R_kgDOTwzOzQ"
+      data-category="Announcements"
+      data-category-id="DIC_kwDOTwzOzc4DC2In"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme="https://blog.033280721.xyz/giscus/giscus-dark.css"
+      data-lang="zh-CN"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </div>
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2026 VlisiyiV<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
